@@ -5,7 +5,7 @@
  
 .data
  
-string_to_print: .asciz "testssdfas\n"
+string_to_print: .asciz "Namen: %s %s %a %s %s. Leeftijd: %u. Jaar: %u. i^2: %d. Percent: %%. Nonsense: %q\n"
 loc:        
 .equ            length, loc - string_to_print      # Load length of string in length variable
 buffer:         .skip   256 
@@ -83,7 +83,10 @@ my_printf:                              # Parameters:
     je      formatstr_a
     cmpb    $'s', (%rdi)
     je      formatstr_s
- 
+    
+    cmpb     $0, (%rdi)
+    jne     next_ampersand
+
     subq    $666, %rcx
     subq    %rcx, %rdx                   ## Calc amt of spaces needed to go back
     subq    %rdx, %rdi                   ## Go back the calculated amt of spaces
