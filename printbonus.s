@@ -5,7 +5,7 @@
  
 .data
  
-string_to_print: .asciz "Namen: %s %s %s %s. Leeftijd: %u. Jaar: %u. i^2: %d. Percent: %%. Nonsense: %q\n"
+string_to_print: .asciz "testssdfas\n"
 loc:        
 .equ            length, loc - string_to_print      # Load length of string in length variable
 buffer:         .skip   256 
@@ -66,7 +66,8 @@ my_printf:                              # Parameters:
     movq    %rax, %rdx
 
     addq    $666, %rcx
- 
+    decq    %rdi
+
     next_ampersand:
     movq    $0, %rax                    #  Clear RAX
     movq    $'%', %rax                  
@@ -133,9 +134,8 @@ formatstr_d:
     jmp     next_ampersand
  
 formatstr_a:
-    decq    %rdi                        ## go to place of first %
     movb    $0, (%rdi)                  ## remove first %
-    
+
     jmp     next_ampersand
  
 formatstr_s:
